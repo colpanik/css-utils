@@ -1,17 +1,28 @@
-.dib
+.dib(@vertical-align: top)
 {
   display: inline-block;
-  vertical-align: top;
+  vertical-align: @vertical-align;
 }
 
-.bg-image(@url)
+@image-root-path: '/images/';
+.bg-image(@file, @has-2x: false, @extension: '.png')
 {
   color: transparent;
   text-indent: -9999px;
-  background-image: url(@url);
   background-repeat: no-repeat;
   background-position: center center;
   background-size: 100% auto;
+  background-image: url("@{image-root-path}@{file}@{extension}");
+
+  & when (@has-2x = true) 
+  {
+    @media 
+    (-webkit-min-device-pixel-ratio: 2), 
+    (min-resolution: 192dpi)
+    {
+      background-image: url("@{image-root-path}@{file}@2x@{extension}");
+    }
+  } 
 }
 
 .add-font(@name, @url, @style: normal, @weight: normal)
